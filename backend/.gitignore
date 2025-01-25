@@ -1,0 +1,19 @@
+# Python files
+*.pyc
+*.pyo
+__pycache__/
+.pytest_cache/
+
+# Virtual environment
+venv/
+.venv/
+
+# FastAPI specific
+.env
+
+# macOS
+.DS_Store
+
+# IDE specific
+.vscode/
+.idea/
