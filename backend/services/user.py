@@ -1,4 +1,6 @@
+from sqlalchemy import delete,update
 from sqlalchemy.orm import Session
+
 from ..schema.profile import ProfileSchema
 from ..models.user import UserModel
 
@@ -20,7 +22,11 @@ class UserService(object):
         ...
 
     def delete_user(self, user_id):
-        ...
+        stmt = delete(UserModel).where(UserModel.id == user_id)
+
+        self.session.execute(stmt)
 
     def deactivate_account(self, user_id):
-        ...
+        stmt = update(UserModel).values(is_active = False).where(UserModel.id == user_id)
+
+        self.session.execute(stmt)
