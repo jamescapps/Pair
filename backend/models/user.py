@@ -5,6 +5,7 @@ import enum
 
 Base = declarative_base()
 
+
 class Gender(enum.Enum):
     MALE = "MALE"
     FEMALE = "FEMALE"
@@ -12,11 +13,11 @@ class Gender(enum.Enum):
 
 
 class UserModel(Base):
-    __tablename__ = "users"  
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True, nullable=False)
-    email = Column(String, unique=True,nullable=False)
+    email = Column(String, unique=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
