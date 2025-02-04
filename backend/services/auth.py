@@ -13,3 +13,9 @@ class AuthService(object):
 
     def generate_token(self):
         ...
+
+    def send_email_update_verification(self, email: str):
+        ...
+     
+    def confirm_emai_update(self):
+        ...
