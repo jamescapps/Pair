@@ -13,3 +13,12 @@ class MessageService(object):
 
     def send_message(self, from_user_id: int, to_user_id: int):
         pass
+
+    def mark_message_as_seen(self, user_id: int, message_id: int):
+        pass
+
+    def delete_message_(self, user_id: int, message_id: int):
+        pass
+
+    def reply(self, user_id: int, message_id: int):
+        pass

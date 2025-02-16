@@ -1,7 +1,7 @@
-from sqlalchemy import delete, update
+from sqlalchemy import delete, update, select
 from sqlalchemy.orm import Session
 
-from ..schema.profile import ProfileSchema
+from ..schema.profile import ProfileSchema, SignUpSchema
 from ..models.user import UserModel
 from .auth import AuthService
 
@@ -16,12 +16,10 @@ class UserService(object):
 
         return self.session.execute(q).scalar_one()
 
-    def create_user(self, profile_data: ProfileSchema):
+    def create_user(self, profile_data: SignUpSchema):
         user = UserModel(
-            username=profile_data.username,
             email=profile_data.email,
-            first_name=profile_data.first_name,
-            about=profile_data.about,
+            password=profile_data.password,
         )
 
         self.session.add(user)
