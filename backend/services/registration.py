@@ -14,13 +14,14 @@ def _passwords_match(password1, password2) -> bool:
     return password1 == password2
 
 
+def _hash_password(self, password: str) -> str:
+    return pwd_context.hash(password)
+
+
 class RegisterationService(object):
     def __init__(self, session: Session):
         self.session = session
         self.user_svc = UserService(session)
-
-    def _hash_password(self, password: str) -> str:
-        return pwd_context.hash(password)
 
     def _user_already_exists(self, email: str) -> bool:
         q = select(exists().where(UserModel.email == email))
@@ -37,6 +38,4 @@ class RegisterationService(object):
                 detail="An account with that email address already exists.",
             )
 
-        self.user_svc.create_user(
-            user_info.email, self._hash_password(user_info.password2)
-        )
+        self.user_svc.create_user(user_info.email, _hash_password(user_info.password2))
