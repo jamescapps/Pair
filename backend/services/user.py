@@ -20,6 +20,11 @@ class UserService(object):
 
         return self.session.execute(q).scalar_one()
 
+    def get_user_by_email(self, email: str) -> UserModel | None:
+        q = select(UserModel).where(UserModel.email == email)
+
+        return self.session.execute(q).scalar_one_or_none()
+
     def create_user(self, profile_data: SignUpSchema) -> None:
         user = UserModel(
             email=profile_data.email,
