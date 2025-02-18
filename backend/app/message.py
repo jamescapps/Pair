@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from services.message import MessageService
 
 router = APIRouter(prefix="/v1/message", tags=["message"])

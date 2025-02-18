@@ -1,16 +1,15 @@
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import MagicMock
-from ..app.main import app
 from services.registration import RegisterationService
 
-# Create a test client for FastAPI
+from ...app.main import app
+
 client = TestClient(app)
 
-# Mock database session
 mock_db = MagicMock()
 
-# Mock UserService with our fake database session
 svc = RegisterationService(mock_db)
 
 

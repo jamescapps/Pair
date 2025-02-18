@@ -1,12 +1,11 @@
 from fastapi import HTTPException
+from models.user import UserModel
 from passlib.context import CryptContext
-
-from sqlalchemy import select, exists
+from services.user import UserService
+from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
 from backend.schema.registration import RegistrationSchema
-from models.user import UserModel
-from services.user import UserService
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
