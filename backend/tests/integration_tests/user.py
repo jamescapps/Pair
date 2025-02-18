@@ -23,7 +23,7 @@ def session(engine):
 
 
 @pytest.fixture
-def user1(session):
+def user1(session: Session) -> UserModel:  # -> Any:
     user = UserModel(email="user1@example.com", password="password123")
     session.add(user)
     session.commit()
@@ -31,7 +31,7 @@ def user1(session):
 
 
 @pytest.fixture
-def user2(session):
+def user2(session: Session) -> UserModel:
     user = UserModel(email="user2@example.com", password="password123")
     session.add(user)
     session.commit()
@@ -41,7 +41,9 @@ def user2(session):
 client = TestClient(app)
 
 
-def test_show_first_name_endpoint(user1, user2, session):
+def test_show_first_name_endpoint(
+    user1: UserModel, user2: UserModel, session: Session
+) -> None:
     """Test the /show_first_name/ endpoint."""
     data = {
         "user_id": user1.id,
@@ -66,7 +68,9 @@ def test_show_first_name_endpoint(user1, user2, session):
     assert visible_first_name.permission_granted_for_user_id == user2.id
 
 
-def test_un_show_first_name_endpoint(user1, user2, session):
+def test_un_show_first_name_endpoint(
+    user1: UserModel, user2: UserModel, session: UserModel
+) -> None:
     """Test the /un_show_first_name/ endpoint."""
     # First, show the first name for user1 to user2
     data_show = {
@@ -96,7 +100,7 @@ def test_un_show_first_name_endpoint(user1, user2, session):
     assert visible_first_name is None
 
 
-def test_create_user(user1, session):
+def test_create_user(session: Session) -> None:
     """Test the /create_user/ endpoint."""
     data = {
         "email": "newuser@example.com",
@@ -114,7 +118,7 @@ def test_create_user(user1, session):
     assert new_user.email == "newuser@example.com"
 
 
-def test_edit_user(user1, session):
+def test_edit_user(user1: UserModel, session: Session) -> None:
     """Test the /edit_user/ endpoint."""
     data = {
         "first_name": "New First Name",
@@ -132,7 +136,7 @@ def test_edit_user(user1, session):
     assert updated_user.about == "This is a new about section."
 
 
-def test_update_user_email(user1, session):
+def test_update_user_email(user1: UserModel, session: Session) -> None:
     """Test the /update_user_email/ endpoint."""
     data = {
         "new_email": "updatedemail@example.com",
@@ -148,7 +152,7 @@ def test_update_user_email(user1, session):
     assert updated_user.email == "updatedemail@example.com"
 
 
-def test_delete_user(user1, session):
+def test_delete_user(user1: UserModel, session: Session) -> None:
     """Test the /delete_user/ endpoint."""
     data = {
         "user_id": user1.id,
@@ -164,7 +168,7 @@ def test_delete_user(user1, session):
     assert deleted_user is None
 
 
-def test_deactivate_account(user1, session):
+def test_deactivate_account(user1: UserModel, session: Session) -> None:
     """Test the /deactivate_account/ endpoint."""
     data = {
         "user_id": user1.id,
@@ -180,7 +184,7 @@ def test_deactivate_account(user1, session):
     assert deactivated_user.is_active is False
 
 
-def test_suggest_usernames(user1, session):
+def test_suggest_usernames(user1: UserModel) -> None:
     """Test the /suggest_usernames/ endpoint."""
     data = {
         "user_id": user1.id,

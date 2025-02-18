@@ -14,13 +14,13 @@ svc = RegisterationService(mock_db)
 
 
 @pytest.fixture
-def reset_mocks():
+def reset_mocks() -> None:
     """Reset mock call history before each test."""
     mock_db.reset_mock()
     svc.reset_mock()
 
 
-def test_user_signup_success(reset_mocks):
+def test_user_signup_success(reset_mocks) -> None:
     """Test successful user signup."""
     svc.user_exists.return_value = False
 
@@ -39,7 +39,7 @@ def test_user_signup_success(reset_mocks):
     svc.create_user.assert_called_once()
 
 
-def test_user_signup_password_mismatch(reset_mocks):
+def test_user_signup_password_mismatch(reset_mocks) -> None:
     """Test signup failure when passwords do not match."""
     response = client.post(
         "/",
@@ -55,7 +55,7 @@ def test_user_signup_password_mismatch(reset_mocks):
     svc.create_user.assert_not_called()
 
 
-def test_user_signup_existing_user(reset_mocks):
+def test_user_signup_existing_user(reset_mocks) -> None:
     """Test signup failure when user already exists."""
     svc.user_exists.return_value = True
 
