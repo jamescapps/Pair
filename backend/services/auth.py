@@ -34,7 +34,7 @@ class AuthService(object):
     def login(self, email: str, password: str) -> dict[str, str]:
         user = self.user_svc.get_user_by_email(email)
 
-        if not user:
+        if user is None:
             raise HTTPException(status_code=401, detail="Invalid email")
 
         if not verify_password(password, user.hashed_password):
